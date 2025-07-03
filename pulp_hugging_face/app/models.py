@@ -390,9 +390,7 @@ class HuggingFaceDistribution(Distribution):
                         else:
                             logger.info("HF HEAD request successful but no Content-Length header")
                     else:
-                        logger.warning(
-                            f"HEAD failed: {response.status_code}"
-                        )
+                        logger.warning(f"HEAD failed: {response.status_code}")
 
                 except Exception as e:
                     logger.warning(f"Could not get size from HF HEAD request: {e}")
