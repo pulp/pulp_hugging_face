@@ -102,10 +102,6 @@ class HuggingFaceHubClient:
             if response.status_code == 200:
                 return response.content
             else:
-                logger.warning(
-                    f"Failed to download {filename} from {repo_id}: {
-                        response.status_code}"
-                )
                 return None
         except httpx.RequestError as e:
             logger.error(f"Error downloading {filename} from {repo_id}: {e}")
