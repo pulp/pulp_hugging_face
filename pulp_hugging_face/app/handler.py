@@ -8,8 +8,8 @@ ensuring the Hugging Face CLI works seamlessly.
 import logging
 import re
 import hashlib
-from pulpcore.responses import ArtifactResponse
-from pulpcore.app.models import ContentArtifact
+from pulpcore.plugin.responses import ArtifactResponse
+from pulpcore.plugin.models import ContentArtifact
 
 logger = logging.getLogger(__name__)
 
