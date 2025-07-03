@@ -1,0 +1,169 @@
+[build-system]
+requires = [
+    "setuptools >= 40.8.0",
+    "wheel >= 0.29.0",
+]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = "pulp-hugging-face"
+version = "0.0.0.dev"
+description = "pulp-hugging-face plugin for the Pulp Project"
+readme = "README.md"
+authors = [
+  {name="AUTHOR", email="author@email.here"},
+]
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+  "Operating System :: POSIX :: Linux",
+  "Framework :: Django",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.9"
+dependencies = [
+  "pulpcore>=3.49.0,<3.85",
+  "httpx>=0.24.0",
+]
+
+[project.urls]
+Homepage = "https://example.com"
+Documentation = "https://example.com"
+Repository = "https://github.com/pulp/pulp_hugging_face"
+"Bug Tracker" = "https://github.com/pulp/pulp_hugging_face/issues"
+Changelog = "https://example.com/changes/"
+
+
+[project.entry-points."pulpcore.plugin"]
+pulp_hugging_face = "pulp_hugging_face:default_app_config"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.towncrier]
+filename = "CHANGES.md"
+directory = "CHANGES/"
+title_format = "## {version} ({project_date}) {{: #{version} }}"
+template = "CHANGES/.TEMPLATE.md"
+issue_format = "[#{issue}](https://github.com/pulp/pulp_hugging_face/issues/{issue})"
+start_string = "[//]: # (towncrier release notes start)\n"
+underlines = ["", "", ""]
+
+    [[tool.towncrier.type]]
+        directory = "feature"
+        name = "Features"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "bugfix"
+        name = "Bugfixes"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "doc"
+        name = "Improved Documentation"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "removal"
+        name = "Removals"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "deprecation"
+        name = "Deprecations"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "misc"
+        name = "Misc"
+        showcontent = false
+
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | _build
+  | build
+  | dist
+  | migrations
+  | docs
+  | protobuf
+)/
+'''
+
+
+
+[tool.check-manifest]
+ignore = [
+    ".git-blame-ignore-revs",
+    "CHANGES/**",
+    "dev_requirements.txt",
+    "doc_requirements.txt",
+    "lint_requirements.txt",
+    "docs/**",
+    ".flake8",
+    "template_config.yml",
+    ".coveragerc",
+    ".dependabot/config.yml",
+    ".ci/**",
+    ".github/**",
+]
+
+[tool.bumpversion]
+# This section is managed by the plugin template. Do not edit manually.
+
+current_version = "0.0.0.dev"
+commit = false
+tag = false
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<alpha>0a)?(?P<patch>\\d+)(\\.(?P<release>[a-z]+))?"
+serialize = [
+  "{major}.{minor}.{patch}.{release}",
+  "{major}.{minor}.{patch}",
+  "{major}.{minor}.{alpha}{patch}.{release}",
+  "{major}.{minor}.{alpha}{patch}",
+]
+
+[tool.bumpversion.parts.alpha]
+# This section is managed by the plugin template. Do not edit manually.
+
+# This is sort of a hack. In PEP440 prerelease markers work quite differently.
+# But this fits best with the way we have been doing release versions.
+optional_value = "final"
+values = [
+  "0a",
+  "final",
+]
+independent = true
+
+[tool.bumpversion.parts.release]
+# This section is managed by the plugin template. Do not edit manually.
+
+optional_value = "prod"
+values = [
+  "dev",
+  "prod",
+]
+
+[[tool.bumpversion.files]]
+# This section is managed by the plugin template. Do not edit manually.
+
+filename = "./pulp_hugging_face/app/__init__.py"
+search = "version = \"{current_version}\""
+replace = "version = \"{new_version}\""
+
+[[tool.bumpversion.files]]
+# This section is managed by the plugin template. Do not edit manually.
+
+filename = "./pyproject.toml"
+search = "version = \"{current_version}\""
+replace = "version = \"{new_version}\""

@@ -1,0 +1,81 @@
+# Generated migration for pulp_hugging_face plugin
+
+from django.db import migrations, models
+import django.db.models.deletion
+import pulpcore.plugin.util
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+        ('core', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='HuggingFaceContent',
+            fields=[
+                ('content_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.content')),
+                ('repo_id', models.CharField(help_text='The Hugging Face repository ID (e.g., "microsoft/DialoGPT-medium")', max_length=255)),
+                ('repo_type', models.CharField(choices=[('models', 'Models'), ('datasets', 'Datasets'), ('spaces', 'Spaces')], default='models', help_text='The type of Hugging Face repository', max_length=20)),
+                ('relative_path', models.TextField(help_text='The relative path within the repository')),
+                ('revision', models.CharField(default='main', help_text='The git revision/branch/tag', max_length=255)),
+                ('size', models.BigIntegerField(blank=True, help_text='File size in bytes', null=True)),
+                ('etag', models.CharField(blank=True, help_text='ETag from Hugging Face', max_length=255, null=True)),
+                ('last_modified', models.DateTimeField(blank=True, help_text='Last modified timestamp', null=True)),
+                ('_pulp_domain', models.ForeignKey(default=pulpcore.plugin.util.get_domain_pk, on_delete=django.db.models.deletion.PROTECT, to='core.domain')),
+            ],
+            options={
+                'default_related_name': 'pulp_hugging_face_huggingfacecontent',
+            },
+            bases=('core.content',),
+        ),
+        migrations.CreateModel(
+            name='HuggingFaceRemote',
+            fields=[
+                ('remote_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.remote')),
+                ('hf_hub_url', models.URLField(default='https://huggingface.co', help_text='Base URL for Hugging Face Hub')),
+                ('hf_token', models.CharField(blank=True, help_text='Hugging Face authentication token for private repositories', max_length=255, null=True)),
+            ],
+            options={
+                'default_related_name': 'pulp_hugging_face_huggingfaceremote',
+            },
+            bases=('core.remote',),
+        ),
+        migrations.CreateModel(
+            name='HuggingFaceRepository',
+            fields=[
+                ('repository_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.repository')),
+            ],
+            options={
+                'default_related_name': 'pulp_hugging_face_huggingfacerepository',
+            },
+            bases=('core.repository',),
+        ),
+        migrations.CreateModel(
+            name='HuggingFacePublication',
+            fields=[
+                ('publication_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.publication')),
+            ],
+            options={
+                'default_related_name': 'pulp_hugging_face_huggingfacepublication',
+            },
+            bases=('core.publication',),
+        ),
+        migrations.CreateModel(
+            name='HuggingFaceDistribution',
+            fields=[
+                ('distribution_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.distribution')),
+            ],
+            options={
+                'default_related_name': 'pulp_hugging_face_huggingfacedistribution',
+            },
+            bases=('core.distribution',),
+        ),
+        migrations.AlterUniqueTogether(
+            name='huggingfacecontent',
+            unique_together={('repo_id', 'repo_type', 'relative_path', 'revision', '_pulp_domain')},
+        ),
+    ]

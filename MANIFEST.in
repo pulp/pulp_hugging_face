@@ -1,0 +1,10 @@
+include CHANGES.md
+include COMMITMENT
+exclude CONTRIBUTING.md
+include COPYRIGHT
+include functest_requirements.txt
+include LICENSE
+include pyproject.toml
+include requirements.txt
+include unittest_requirements.txt
+exclude releasing.md

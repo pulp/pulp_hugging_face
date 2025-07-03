@@ -1,0 +1,12 @@
+---
+all:
+  children:
+    containers:
+      hosts:
+        pulp:
+        pulp-fixtures:
+        minio:
+        ci-sftp:
+      vars:
+        ansible_connection: docker
+...
