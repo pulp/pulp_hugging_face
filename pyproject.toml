@@ -7,7 +7,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "pulp-hugging-face"
-version = "0.0.0.dev"
+version = "0.0.1.dev"
 description = "pulp-hugging-face plugin for the Pulp Project"
 readme = "README.md"
 authors = [
