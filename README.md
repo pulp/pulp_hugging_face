@@ -24,12 +24,12 @@ First, create a Hugging Face remote that points to the Hugging Face Hub using th
 
 ```bash
 # Using curl (REST API)
-curl -X POST http://localhost:5001/pulp/api/v3/remotes/hugging_face/hugging-face/ \
+curl -X POST https://your-pulp-instance.com/api/pulp/public-domain-name/api/v3/remotes/hugging_face/hugging-face/ \
   -H "Content-Type: application/json" \
   -u admin:password \
   -d '{
     "name": "hf-remote",
-    "hf_hub_url": "https://huggingface.co",
+    "url": "https://huggingface.co",
     "policy": "on_demand"
   }'
 ```
@@ -38,12 +38,12 @@ For private repositories, include your Hugging Face token:
 
 ```bash
 # Using curl with authentication token
-curl -X POST http://localhost:5001/pulp/api/v3/remotes/hugging_face/hugging-face/ \
+curl -X POST https://your-pulp-instance.com/api/pulp/public-domain-name/api/v3/remotes/hugging_face/hugging-face/ \
   -H "Content-Type: application/json" \
   -u admin:password \
   -d '{
     "name": "hf-private",
-    "hf_hub_url": "https://huggingface.co",
+    "url": "https://huggingface.co",
     "policy": "on_demand",
     "hf_token": "YOUR_HF_TOKEN"
   }'
@@ -55,10 +55,10 @@ Create a distribution that uses the remote for pull-through caching:
 
 ```bash
 # First get the remote href
-REMOTE_HREF=$(curl -s http://localhost:5001/pulp/api/v3/remotes/hugging_face/hugging-face/ -u admin:password | jq -r '.results[] | select(.name=="hf-remote") | .pulp_href')
+REMOTE_HREF=$(curl -s https://your-pulp-instance.com/api/pulp/public-domain-name/api/v3/remotes/hugging_face/hugging-face/ -u admin:password | jq -r '.results[] | select(.name=="hf-remote") | .pulp_href')
 
 # Create distribution
-curl -X POST http://localhost:5001/pulp/api/v3/distributions/hugging_face/hugging-face/ \
+curl -X POST https://your-pulp-instance.com/api/pulp/public-domain-name/api/v3/distributions/hugging_face/hugging-face/ \
   -H "Content-Type: application/json" \
   -u admin:password \
   -d "{
@@ -66,6 +66,8 @@ curl -X POST http://localhost:5001/pulp/api/v3/distributions/hugging_face/huggin
     \"base_path\": \"huggingface\",
     \"remote\": \"$REMOTE_HREF\"
   }"
+
+https://cert.console.redhat.com/api/pulp-content/public-ytrahnov/huggingface/
 ```
 
 > **Note**: CLI support (`pulp hugging-face` commands) is planned but not yet implemented. Currently, you need to use the REST API directly or create a simple script for automation.
@@ -76,13 +78,17 @@ Once configured, you can access Hugging Face content through your Pulp instance:
 
 ```bash
 # Download a model file
-curl http://your-pulp-instance/pulp/content/huggingface/microsoft/DialoGPT-medium/resolve/main/config.json
+curl http://your-pulp-instance/api/pulp-content/public-domain-name/huggingface/microsoft/DialoGPT-medium/resolve/main/config.json
 
 # Access API endpoints
-curl http://your-pulp-instance/pulp/content/huggingface/api/models/microsoft/DialoGPT-medium
+curl http://your-pulp-instance/api/pulp-content/public-domain-name/huggingface/api/models/microsoft/DialoGPT-medium
 
 # List repository files
-curl http://your-pulp-instance/pulp/content/huggingface/api/models/microsoft/DialoGPT-medium/tree/main
+curl http://your-pulp-instance/api/pulp-content/public-domain-name/huggingface/models/microsoft/DialoGPT-medium/tree/main
+
+#If you want to use it with the huggingface-cli
+export HF_ENDPOINT="http://your-pulp-instance/api/pulp-content/public-domain-name/huggingface"
+huggingface-cli download hf-internal-testing/tiny-random-bert
 ```
 
 ### How Pull-through Caching Works
@@ -127,11 +133,6 @@ cd pulp_hugging_face
 pip install -e .
 ```
 
-### Running Tests
-
-```bash
-pytest
-```
 
 ### CLI Support (TODO)
 
@@ -139,7 +140,6 @@ CLI support for this plugin is planned but not yet implemented. The plugin curre
 
 - ✅ **REST API**: Full functionality via `/pulp/api/v3/`
 - ❌ **CLI Commands**: `pulp hugging-face` commands not yet available
-- ❌ **Client Libraries**: Python/Ruby clients not yet generated
 
 To add CLI support, the following would need to be implemented:
 1. CLI command definitions in a `cli/` directory
