@@ -21,10 +21,10 @@ rm -rf "pulp_hugging_face-client"
 ./gen-client.sh "../pulp_hugging_face/hugging_face-api.json" "hugging_face" python "pulp_hugging_face"
 
 pushd pulp_hugging_face-client
-python setup.py sdist bdist_wheel --python-tag py3
+python -m build
 
 twine check "dist/pulp_hugging_face_client-"*"-py3-none-any.whl"
-twine check "dist/pulp_hugging_face-client-"*".tar.gz"
+twine check "dist/pulp_hugging_face_client-"*".tar.gz"
 
 tar cvf "../../pulp_hugging_face/hugging_face-python-client.tar" ./dist
 
