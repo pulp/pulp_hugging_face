@@ -11,7 +11,7 @@ version = "0.1.0.dev"
 description = "pulp-hugging-face plugin for the Pulp Project"
 readme = "README.md"
 authors = [
-  {name="AUTHOR", email="author@email.here"},
+  {name="Yasen Trahnov", email="yasen@trahnov.eu"},
 ]
 classifiers = [
   "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
@@ -31,11 +31,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://example.com"
-Documentation = "https://example.com"
+Homepage = "https://pulpproject.org/"
+Documentation = "https://github.com/pulp/pulp_hugging_face/blob/main/README.md"
 Repository = "https://github.com/pulp/pulp_hugging_face"
 "Bug Tracker" = "https://github.com/pulp/pulp_hugging_face/issues"
-Changelog = "https://example.com/changes/"
+Changelog = "https://github.com/pulp/pulp_hugging_face/blob/main/CHANGES.md"
 
 
 [project.entry-points."pulpcore.plugin"]
