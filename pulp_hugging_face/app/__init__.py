@@ -6,6 +6,6 @@ class PulpHuggingFacePluginAppConfig(PulpPluginAppConfig):
 
     name = "pulp_hugging_face.app"
     label = "hugging_face"
-    version = "0.3.0"
+    version = "0.3.1.dev"
     python_package_name = "pulp_hugging_face"
     domain_compatible = True
