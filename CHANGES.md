@@ -8,6 +8,42 @@
 
 [//]: # (towncrier release notes start)
 
+## 0.3.0 (2026-01-20) {: #0.3.0 }
+
+No significant changes.
+
+---
+
+## 0.2.2 (2026-01-20) {: #0.2.2 }
+
+No significant changes.
+
+---
+
+## 0.2.1 (2026-01-20) {: #0.2.1 }
+
+No significant changes.
+
+---
+
+## 0.2.0 (2026-01-20) {: #0.2.0 }
+
+No significant changes.
+
+---
+
+## 0.1.2 (2026-01-20) {: #0.1.2 }
+
+No significant changes.
+
+---
+
+## 0.1.1 (2026-01-20) {: #0.1.1 }
+
+No significant changes.
+
+---
+
 ## 0.1.0 (2025-08-19) {: #0.1.0 }
 
 No significant changes.
