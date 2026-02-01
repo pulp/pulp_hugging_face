@@ -87,6 +87,12 @@ jobs:
           fi
           echo "run_tests=$exit_code" >> $GITHUB_OUTPUT
 
+  docs:
+    needs: "check-changes"
+    uses: "./.github/workflows/docs.yml"
+    with:
+      run_docs: ${{ needs.check-changes.outputs.run_docs }}
+
   lint:
     needs:
       - "check-changes"
@@ -132,6 +138,7 @@ jobs:
       - "check-commits"
       - "lint"
       - "test"
+      - "docs"
     if: "always()"
     steps:
       - name: "Collect needed jobs results"
