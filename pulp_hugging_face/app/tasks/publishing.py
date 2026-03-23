@@ -8,7 +8,6 @@ from pulpcore.plugin.models import (
 
 from pulp_hugging_face.app.models import HuggingFacePublication
 
-
 log = logging.getLogger(__name__)
 
 

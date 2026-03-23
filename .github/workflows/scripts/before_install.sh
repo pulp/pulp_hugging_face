@@ -32,6 +32,7 @@ fi
 if [[ "$TEST" = "lowerbounds" ]]; then
   python3 .ci/scripts/calc_constraints.py pyproject.toml > lowerbounds_constraints.txt
 fi
+
 export PULP_API_ROOT=$(test "${TEST}" = "s3" && echo "/rerouted/djnd/" || echo "/pulp/")
 
 echo "PULP_API_ROOT=${PULP_API_ROOT}" >> "$GITHUB_ENV"
@@ -42,30 +43,31 @@ mkdir -p .ci/ansible/vars
 cat > .ci/ansible/vars/main.yaml << VARSYAML
 ---
 scenario: "${TEST}"
+plugin_name: "pulp_hugging_face"
 legacy_component_name: "pulp_hugging_face"
 component_name: "hugging_face"
 component_version: "${COMPONENT_VERSION}"
 pulp_env: {}
 pulp_settings: null
 pulp_scheme: "https"
-pulp_default_container: "ghcr.io/pulp/pulp-ci-centos9:latest"
 api_root: "${PULP_API_ROOT}"
 image:
   name: "pulp"
   tag: "ci_build"
-plugins:
-  - name: "pulp_hugging_face"
-    source: "${COMPONENT_SOURCE}"
-    ci_requirements: $(test -f ci_requirements.txt && echo -n true || echo -n false)
-    upperbounds: $(test "${TEST}" = "pulp" && echo -n true || echo -n false)
-    lowerbounds: $(test "${TEST}" = "lowerbounds" && echo -n true || echo -n false)
+  ci_base: "ghcr.io/pulp/pulp-ci-centos9:latest"
+  source: "${COMPONENT_SOURCE}"
+  ci_requirements: $(test -f ci_requirements.txt && echo -n true || echo -n false)
+  upperbounds: $(test "${TEST}" = "pulp" && echo -n true || echo -n false)
+  lowerbounds: $(test "${TEST}" = "lowerbounds" && echo -n true || echo -n false)
+  webserver_snippet: $(test -f pulp_hugging_face/app/webserver_snippets/nginx.conf && echo -n true || echo -n false )
+extra_files:
+  - origin: "pulp_hugging_face"
+    destination: "pulp_hugging_face"
 services:
   - name: "pulp"
     image: "pulp:ci_build"
     volumes:
       - "./settings:/etc/pulp"
-      - "./ssh:/keys/"
-      - "~/.config:/var/lib/pulp/.config"
       - "../../../pulp-openapi-generator:/root/pulp-openapi-generator"
     env:
       PULP_WORKERS: "4"
