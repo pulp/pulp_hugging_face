@@ -33,10 +33,6 @@ if [[ "$TEST" = "lowerbounds" ]]; then
   python3 .ci/scripts/calc_constraints.py pyproject.toml > lowerbounds_constraints.txt
 fi
 
-export PULP_API_ROOT=$(test "${TEST}" = "s3" && echo "/rerouted/djnd/" || echo "/pulp/")
-
-echo "PULP_API_ROOT=${PULP_API_ROOT}" >> "$GITHUB_ENV"
-
 # Compose the scenario definition.
 mkdir -p .ci/ansible/vars
 
@@ -48,9 +44,8 @@ legacy_component_name: "pulp_hugging_face"
 component_name: "hugging_face"
 component_version: "${COMPONENT_VERSION}"
 pulp_env: {}
-pulp_settings: null
+pulp_settings: {"api_root": "/pulp/"}
 pulp_scheme: "https"
-api_root: "${PULP_API_ROOT}"
 image:
   name: "pulp"
   tag: "ci_build"
@@ -87,7 +82,7 @@ if [ "$TEST" = "s3" ]; then
 s3_test: true
 minio_access_key: "${MINIO_ACCESS_KEY}"
 minio_secret_key: "${MINIO_SECRET_KEY}"
-pulp_scenario_settings: null
+pulp_scenario_settings: {"api_root": "/rerouted/djnd/"}
 pulp_scenario_env: {}
 VARSYAML
 fi
