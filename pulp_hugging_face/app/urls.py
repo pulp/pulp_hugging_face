@@ -6,6 +6,7 @@ the Hugging Face CLI works seamlessly with Pulp's pull-through caching.
 """
 
 from django.urls import re_path
+
 from . import views
 
 # Content URL patterns that match HF Hub patterns

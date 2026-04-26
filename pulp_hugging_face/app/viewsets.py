@@ -11,7 +11,6 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from pulpcore.plugin.viewsets import RemoteFilter
 from pulpcore.plugin import viewsets as core
 from pulpcore.plugin.actions import ModifyRepositoryActionMixin
 from pulpcore.plugin.serializers import (
@@ -19,9 +18,10 @@ from pulpcore.plugin.serializers import (
     RepositorySyncURLSerializer,
 )
 from pulpcore.plugin.tasking import dispatch
+from pulpcore.plugin.viewsets import RemoteFilter
 
 from . import models, serializers
-from .tasks import synchronizing, publishing
+from .tasks import publishing, synchronizing
 
 
 class HuggingFaceContentFilter(core.ContentFilter):
