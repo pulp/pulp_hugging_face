@@ -10,8 +10,8 @@ from gettext import gettext as _
 from rest_framework import serializers
 
 from pulpcore.plugin import serializers as platform
-from pulpcore.plugin.serializers import DetailRelatedField
 from pulpcore.plugin.models import Remote
+from pulpcore.plugin.serializers import DetailRelatedField
 
 from . import models
 

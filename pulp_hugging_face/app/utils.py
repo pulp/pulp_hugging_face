@@ -2,9 +2,10 @@
 Utilities for interacting with Hugging Face Hub API.
 """
 
-import httpx
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
+
+import httpx
 
 logger = logging.getLogger(__name__)
 
