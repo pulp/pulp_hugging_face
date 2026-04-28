@@ -11,10 +11,10 @@ from django.db import models
 
 from pulpcore.plugin.models import (
     Content,
+    Distribution,
+    Publication,
     Remote,
     Repository,
-    Publication,
-    Distribution,
 )
 from pulpcore.plugin.util import get_domain_pk
 
@@ -283,9 +283,9 @@ class HuggingFaceDistribution(Distribution):
         Returns:
             dict: Dictionary with HTTP Response header/value pairs.
         """
-        import re
         import hashlib
         import logging
+        import re
 
         logger = logging.getLogger(__name__)
         logger.info(f"content_headers_for called for path: {path}")
@@ -346,7 +346,7 @@ class HuggingFaceDistribution(Distribution):
                 "X-Linked-Size,X-Linked-ETag,X-Xet-Hash"
             )
             headers["Content-Disposition"] = (
-                f"inline; filename*=UTF-8''{filename}; " f'filename="{filename}";'
+                f"inline; filename*=UTF-8''{filename}; filename=\"{filename}\";"
             )
 
             # Handle size headers - try to get the size from HuggingFace directly

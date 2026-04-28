@@ -1,5 +1,5 @@
-from gettext import gettext as _
 import logging
+from gettext import gettext as _
 
 from pulpcore.plugin.models import Artifact, Remote, Repository
 from pulpcore.plugin.stages import (
