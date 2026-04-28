@@ -5,11 +5,12 @@ This handler provides HF Hub-compatible headers for all HF file patterns,
 ensuring the Hugging Face CLI works seamlessly.
 """
 
+import hashlib
 import logging
 import re
-import hashlib
-from pulpcore.plugin.responses import ArtifactResponse
+
 from pulpcore.plugin.models import ContentArtifact
+from pulpcore.plugin.responses import ArtifactResponse
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +74,6 @@ def huggingface_content_handler(relative_path):
 
     # Try to find the corresponding ContentArtifact and Artifact
     try:
-
         content_artifacts = ContentArtifact.objects.filter(
             relative_path=relative_path
         ).select_related("artifact")
@@ -116,7 +116,7 @@ def huggingface_content_handler(relative_path):
                     "X-Linked-Size,X-Linked-ETag,X-Xet-Hash"
                 ),
                 "Content-Disposition": (
-                    f"inline; filename*=UTF-8''{filename}; " f'filename="{filename}";'
+                    f"inline; filename*=UTF-8''{filename}; filename=\"{filename}\";"
                 ),
             }
 

@@ -6,8 +6,9 @@ to ensure the Hugging Face CLI works seamlessly with Pulp's pull-through caching
 """
 
 import logging
+
 import httpx
-from django.http import HttpResponse, Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
