@@ -11,7 +11,7 @@
 ## Technology Stack
 - **Framework**: Django-based Pulp plugin
 - **Python**: 3.9-3.12
-- **Core Dependencies**: pulpcore (3.100.0-3.115), httpx
+- **Core Dependencies**: pulpcore (3.105.0-3.140), httpx
 - **Version**: 0.4.0.dev
 
 ## Project Structure
