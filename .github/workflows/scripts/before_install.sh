@@ -83,7 +83,8 @@ s3_test: true
 minio_access_key: "${MINIO_ACCESS_KEY}"
 minio_secret_key: "${MINIO_SECRET_KEY}"
 pulp_scenario_settings: {"api_root": "/rerouted/djnd/"}
-pulp_scenario_env: {}
+# MinIO omits 100-continue on 0-byte PUTs; stock botocore hangs without this (boto/botocore#3123).
+pulp_scenario_env: {"BOTO_EXPERIMENTAL__NO_EMPTY_CONTINUE": "true"}
 VARSYAML
 fi
 
